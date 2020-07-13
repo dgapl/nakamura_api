@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.model.repository.UserMapper">
+
+    <resultMap id="user" type="com.example.demo.model.dto.SelectAllUsersOutDto">
+        <id column="user_id" property="userId" />
+        <result column="user_nm" property="userNm" />
+    </resultMap>
+
+    <select id="selectHello" resultType="string">
+        SELECT
+        msg
+        FROM
+        greeting_table
+        WHERE
+        id = '001'
+    </select>
+
+    <select id="selectUser" parameterType="com.example.demo.model.dto.SelectUserInDto" resultType="com.example.demo.model.dto.SelectUserOutDto">
+        SELECT
+        user_nm
+        FROM
+        user_table
+        WHERE
+        user_id = #{userId}
+        AND password = #{password}
+    </select>
+
+    <select id="selectAllUsers" resultMap="user">
+        SELECT
+        user_id,
+        user_nm
+        FROM
+        user_table
+    </select>
+
+    <insert id="insertUser" parameterType="com.example.demo.model.dto.InsertUserInDto">
+        INSERT
+        INTO user_table
+        VALUES (#{userId}, #{userNm}, #{password});
+    </insert>
+
+    <delete id="deleteUser" parameterType="com.example.demo.model.dto.DeleteUserInDto">
+        DELETE
+        FROM
+        user_table
+        WHERE
+        user_id = #{userId}
+        AND password = #{password}
+    </delete>
+
+</mapper>
